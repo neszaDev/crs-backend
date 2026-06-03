@@ -1,5 +1,5 @@
-server:
-  port: 8080
+app:
+  base-url: ${APP_BASE_URL}
 
 spring:
   application:
@@ -9,10 +9,10 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-  security:
-    user:
-      name: admin
-      password: admin123
+  # security:
+  #   user:
+  #     name: admin
+  #     password: admin123
 
   jpa:
     hibernate:
@@ -50,4 +50,12 @@ management:
 
   health:
     redis:
-      enabled: false
+      enabled: true
+    db:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+
+    org.springframework.security: DEBUG

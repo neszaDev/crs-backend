@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.cms.backend.company.repository.CompanyRepository;
-import com.cms.backend.position.entity.Position;
+import com.cms.backend.position.dto.PositionResponse;
 import com.cms.backend.position.repository.PositionRepository;
 
 @Service
@@ -22,7 +22,19 @@ public class PositionService {
         this.companyRepository = companyRepository;
     }
 
-    public List<Position> getAllPositions() {
-        return positionRepository.findAll();
+public List<PositionResponse> getAllPositions() {
+        return positionRepository.findAll()
+                .stream()
+                .map(position -> new PositionResponse(
+                        position.getPublicId(),
+                        position.getCompany() != null
+                                ? position.getCompany().getName()
+                                : null,
+                        position.getName(),
+                        position.getDescription(),
+                        position.getLevel(),
+                        position.getIsActive()
+                    ))
+                .toList();
     }
 }

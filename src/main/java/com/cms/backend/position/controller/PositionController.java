@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cms.backend.position.entity.Position;
+import com.cms.backend.position.dto.PositionResponse;
 import com.cms.backend.position.service.PositionService;
 
 @RestController
@@ -22,7 +22,7 @@ public class PositionController {
     }
 
     @GetMapping
-    public List<Position> getAllPositions() {
+    public List<PositionResponse> getAllPositions() {
         return positionService.getAllPositions();
     }
 }

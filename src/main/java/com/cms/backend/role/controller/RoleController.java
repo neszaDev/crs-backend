@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.cms.backend.role.dto.CreateRoleRequest;
+import com.cms.backend.role.dto.RoleResponse;
 import com.cms.backend.role.entity.Role;
 import com.cms.backend.role.service.RoleService;
 
@@ -22,7 +23,7 @@ public class RoleController {
     }
 
     @GetMapping
-    public List<Role> getAllRoles() {
+    public List<RoleResponse> getAllRoles() {
         return roleService.getAllRoles();
     }
 

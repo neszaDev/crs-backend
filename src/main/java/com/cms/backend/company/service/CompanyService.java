@@ -1,6 +1,7 @@
 package com.cms.backend.company.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -13,85 +14,79 @@ import com.cms.backend.company.repository.CompanyRepository;
 @Service
 public class CompanyService {
 
-    private final CompanyRepository companyRepository;
+        private final CompanyRepository companyRepository;
 
-    public CompanyService(
-            CompanyRepository companyRepository) {
+        public CompanyService(
+                        CompanyRepository companyRepository) {
 
-        this.companyRepository = companyRepository;
-    }
-
-    public CompanyResponse createCompany(
-            CreateCompanyRequest request) {
-
-        if (companyRepository.existsByName(
-                request.getName())) {
-
-            throw new RuntimeException(
-                    "Company already exists");
+                this.companyRepository = companyRepository;
         }
 
-        Company company = new Company();
+        public CompanyResponse createCompany(
+                        CreateCompanyRequest request) {
 
-        company.setName(request.getName());
-        company.setSubscriptionPlan(
-                request.getSubscriptionPlan());
+                if (companyRepository.existsByName(
+                                request.getName())) {
 
-        Company savedCompany =
-                companyRepository.save(company);
+                        throw new RuntimeException(
+                                        "Company already exists");
+                }
 
-        return mapToResponse(savedCompany);
-    }
+                Company company = new Company();
 
-    public List<CompanyResponse> getAllCompanies() {
+                company.setName(request.getName());
+                company.setPublicId(UUID.randomUUID());
+                company.setSubscriptionPlan(
+                                request.getSubscriptionPlan());
 
-        return companyRepository.findAll()
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
-    }
+                Company savedCompany = companyRepository.save(company);
 
-    public CompanyResponse getCompanyById(
-            Integer id) {
+                return mapToResponse(savedCompany);
+        }
 
-        Company company =
-                companyRepository.findById(id)
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Company not found"));
+        public List<CompanyResponse> getAllCompanies() {
 
-        return mapToResponse(company);
-    }
+                return companyRepository.findAll()
+                                .stream()
+                                .map(this::mapToResponse)
+                                .toList();
+        }
 
-    public CompanyResponse updateCompany(
-            Integer id,
-            UpdateCompanyRequest request) {
+        public CompanyResponse getCompanyByPublicId(
+                        UUID publicId) {
 
-        Company company =
-                companyRepository.findById(id)
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Company not found"));
+                Company company = companyRepository.findByPublicId(publicId)
+                                .orElseThrow(() -> new RuntimeException(
+                                                "Company not found"));
 
-        company.setName(request.getName());
-        company.setSubscriptionPlan(
-                request.getSubscriptionPlan());
-        company.setStatus(request.getStatus());
+                return mapToResponse(company);
+        }
 
-        Company updated =
-                companyRepository.save(company);
+        public CompanyResponse updateCompany(
+                        UUID id,
+                        UpdateCompanyRequest request) {
 
-        return mapToResponse(updated);
-    }
+                Company company = companyRepository.findByPublicId(id)
+                                .orElseThrow(() -> new RuntimeException(
+                                                "Company not found"));
 
-    private CompanyResponse mapToResponse(
-            Company company) {
+                company.setName(request.getName());
+                company.setSubscriptionPlan(
+                                request.getSubscriptionPlan());
+                company.setStatus(request.getStatus());
 
-        return new CompanyResponse(
-                company.getId(),
-                company.getName(),
-                company.getSubscriptionPlan(),
-                company.getStatus()
-        );
-    }
+                Company updated = companyRepository.save(company);
+
+                return mapToResponse(updated);
+        }
+
+        private CompanyResponse mapToResponse(
+                        Company company) {
+
+                return new CompanyResponse(
+                                company.getPublicId(),
+                                company.getName(),
+                                company.getSubscriptionPlan(),
+                                company.getStatus());
+        }
 }

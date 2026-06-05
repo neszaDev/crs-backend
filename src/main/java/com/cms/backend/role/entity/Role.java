@@ -1,5 +1,7 @@
 package com.cms.backend.role.entity;
 
+import java.util.UUID;
+
 import com.cms.backend.common.entity.AuditableEntity;
 
 import jakarta.persistence.Column;
@@ -11,7 +13,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(
     name = "roles",
@@ -25,24 +31,11 @@ public class Role extends AuditableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "public_id", nullable = false, unique = true)
+    private UUID publicId;
+
     @NotBlank
     @Size(max = 255)
     @Column(nullable = false, unique = true)
     private String name;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

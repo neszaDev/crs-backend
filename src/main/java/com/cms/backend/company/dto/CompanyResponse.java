@@ -1,7 +1,9 @@
 package com.cms.backend.company.dto;
 
+import java.util.UUID;
+
 public record CompanyResponse(
-        Integer id,
+        UUID id,
         String name,
         String subscriptionPlan,
         String status

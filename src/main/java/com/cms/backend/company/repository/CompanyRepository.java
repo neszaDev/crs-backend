@@ -1,6 +1,7 @@
 package com.cms.backend.company.repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,5 +12,5 @@ public interface CompanyRepository
 
     boolean existsByName(String name);
 
-    Optional<Company> findByName(String name);
+    Optional<Company> findByPublicId(UUID publicId);
 }

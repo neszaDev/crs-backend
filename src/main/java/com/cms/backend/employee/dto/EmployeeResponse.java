@@ -1,7 +1,9 @@
 package com.cms.backend.employee.dto;
 
+import java.util.UUID;
+
 public record EmployeeResponse(
-        Integer id,
+        UUID id,
         String employeeCode,
         String firstName,
         String lastName,

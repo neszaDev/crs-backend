@@ -1,5 +1,7 @@
 package com.cms.backend.company.entity;
 
+import java.util.UUID;
+
 import com.cms.backend.common.entity.AuditableEntity;
 
 import jakarta.persistence.Column;
@@ -10,12 +12,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@Getter
+@Setter
 @Entity
 @JsonIgnoreProperties({
-    "hibernateLazyInitializer",
-    "handler"
+        "hibernateLazyInitializer",
+        "handler"
 })
 @Table(name = "companies")
 public class Company extends AuditableEntity {
@@ -23,6 +30,9 @@ public class Company extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "public_id", nullable = false, unique = true)
+    private UUID publicId;
 
     @NotBlank
     @Size(max = 255)
@@ -38,36 +48,4 @@ public class Company extends AuditableEntity {
     @Size(max = 20)
     @Column(nullable = false, length = 20)
     private String status = "ACTIVE";
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSubscriptionPlan() {
-        return subscriptionPlan;
-    }
-
-    public void setSubscriptionPlan(String subscriptionPlan) {
-        this.subscriptionPlan = subscriptionPlan;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

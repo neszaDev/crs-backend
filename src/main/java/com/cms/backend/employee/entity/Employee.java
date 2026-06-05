@@ -2,6 +2,7 @@ package com.cms.backend.employee.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import com.cms.backend.common.entity.AuditableEntity;
 import com.cms.backend.company.entity.Company;
@@ -16,20 +17,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(
-    name = "employees",
-    uniqueConstraints = {
-        @UniqueConstraint(
-            name = "employees_company_id_employee_code_key",
-            columnNames = {"company_id", "employee_code"}
-        )
-    }
-)
+@Table(name = "employees", uniqueConstraints = {
+        @UniqueConstraint(name = "employees_company_id_employee_code_key", columnNames = { "company_id",
+                "employee_code" })
+})
 public class Employee extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "public_id", nullable = false, unique = true)
+    private UUID publicId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)

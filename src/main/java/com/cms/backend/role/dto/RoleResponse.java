@@ -1,31 +1,9 @@
 package com.cms.backend.role.dto;
 
-public class RoleResponse {
+import java.util.UUID;
 
-    private Integer id;
-    private String name;
-
-    public RoleResponse() {
-    }
-
-    public RoleResponse(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+public record RoleResponse(
+    UUID id,
+    String name
+) {
 }

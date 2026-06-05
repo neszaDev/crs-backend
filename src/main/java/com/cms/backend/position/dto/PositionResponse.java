@@ -1,8 +1,10 @@
 package com.cms.backend.position.dto;
 
+import java.util.UUID;
+
 public record PositionResponse(
-        Integer id,
-        Integer companyId,
+        UUID id,
+        String companyId,
         String name,
         String description,
         Integer level,

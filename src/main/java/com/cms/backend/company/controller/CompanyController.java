@@ -1,6 +1,7 @@
 package com.cms.backend.company.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +31,10 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public CompanyResponse getCompanyById(
-            @PathVariable Integer id) {
+    public CompanyResponse findByPublicId(
+            @PathVariable UUID id) {
 
-        return companyService.getCompanyById(id);
+        return companyService.getCompanyByPublicId(id);
     }
 
     @PostMapping
@@ -48,7 +49,7 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     public CompanyResponse updateCompany(
-            @PathVariable Integer id,
+            @PathVariable UUID id,
             @Valid
             @RequestBody
             UpdateCompanyRequest request) {

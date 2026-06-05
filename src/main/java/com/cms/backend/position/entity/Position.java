@@ -1,5 +1,7 @@
 package com.cms.backend.position.entity;
 
+import java.util.UUID;
+
 import com.cms.backend.common.entity.AuditableEntity;
 import com.cms.backend.company.entity.Company;
 
@@ -24,6 +26,9 @@ public class Position extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "public_id", nullable = false, unique = true)
+    private UUID publicId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)

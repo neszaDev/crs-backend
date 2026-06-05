@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.cms.backend.employee.entity.Employee;
+import com.cms.backend.employee.dto.EmployeeResponse;
 import com.cms.backend.employee.service.EmployeeService;
 
 @RestController
@@ -20,7 +20,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
+    public List<EmployeeResponse> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 }

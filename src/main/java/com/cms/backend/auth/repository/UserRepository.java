@@ -2,6 +2,7 @@ package com.cms.backend.auth.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -20,8 +21,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // Company Users
     List<User> findByCompanyIdAndDeletedAtIsNull(Integer companyId);
 
-    // General Active User Queries
-    Optional<User> findByIdAndDeletedAtIsNull(Integer id);
+    Optional<User> findByPublicIdAndDeletedAtIsNull(
+            UUID publicId);
 
     List<User> findByDeletedAtIsNull();
 }
